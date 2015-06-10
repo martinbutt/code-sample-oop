@@ -10,7 +10,6 @@ class Calculator {
 		,'/'
 		,'+'
 		,'-'
-		,'^'
 	);
 
 	/** @var Parser\Parser $_parser */
