@@ -3,15 +3,16 @@
 namespace Parser;
 
 /**
- * Class Simple
+ * Class Advanced
  * @package Parser
  */
-class Simple extends Parser {
+class Advanced extends Parser {
 
 	public function getOperatorOrder() {
 		return array(
 			'*'
 			,'/'
+			,'%'
 			,'+'
 			,'-'
 		);

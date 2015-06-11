@@ -5,17 +5,10 @@
  */
 class Calculator {
 
-	protected $_operationOrder = array(
-		'*'
-		,'/'
-		,'+'
-		,'-'
-	);
-
 	/** @var Parser\Parser $_parser */
-	private $_parser;
+	protected $_parser;
 	/** @var Operator\Factory $_operatorFactory */
-	private $_operatorFactory;
+	protected $_operatorFactory;
 
 	/**
 	 * Constructor with dependency injection
@@ -35,19 +28,15 @@ class Calculator {
 	 * @return int
 	 */
 	public function evaluate($expression) {
-		$total = 0;
 
-		$operands_by_operation = $this->_parser->parse($expression);
+		$result = $this->_parser->parse($expression);
+		$total = $result['base_operand'];
 
-		foreach ($this->_operationOrder as $operation) {
-			if (isset($operands_by_operation[$operation])) {
+		foreach ($this->_parser->getOperatorOrder() as $operation) {
+			if (isset($result['operands_by_operator'][$operation])) {
 				$operator = $this->_operatorFactory->getInstance($operation);
 
-				if (is_null($total)) {
-					$total = array_shift($operands_by_operation);
-				}
-
-				foreach ($operands_by_operation[$operation] as $operand) {
+				foreach ($result['operands_by_operator'][$operation] as $operand) {
 					$total = $operator->evaluate($total, $operand);
 				}
 			}
